@@ -1,0 +1,45 @@
+.dialogs {
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+    }
+
+
+.dialogsItem {
+padding: 10px;
+}
+
+.dialogsItems .active {
+    color: gold;
+}
+
+.messages{
+padding: 10px;
+}
+.message {
+    display: flex;
+
+
+    padding: 10px;
+    border-radius: 5px 5px 5px 0px;
+    background-color: rgba(255, 255, 255, 0.3);
+    margin: 10px 10px 20px 10px;
+}
+.dialog {
+    padding: 5px 0px 0px 0px;
+    display: flex;
+
+}
+.photo {
+    padding: 5px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    display: flex;
+    justify-: flex-end;
+}
+.navLink {
+    padding: 10px;
+}
+/* .messages .message {
+
+} */

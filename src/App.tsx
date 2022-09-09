@@ -1,34 +1,31 @@
 import React from 'react';
 import './App.css';
-import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
-import Profile from './components/Profile/Profile';
-import Dialogs from './components/dialogs/Dialogs';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { StoreType } from "./redux/state";
+import DialogsContainer from './components/dialogs/DialogsContainer';
+import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom';
+import { StoreType } from "./redux/store";
+import UsersContainer from './components/Users/UsersContainer';
+import ProfileContainer from './components/Profile/ProfileContainer';
+import Login from './components/login/Login';
+import HeaderContainer from "./components/Header/HeaderContainer";
 
-type StorePropsType = {
+ export type StorePropsType = {
     store: StoreType
 }
-
-const App = (props: StorePropsType) => {
+const App = () => {
 
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
-                <Header />
-                <Navbar />
+                <HeaderContainer />
+                <Navbar /> 
                 <div className='app-wrapper-content'>
                     <Routes>
-                        <Route path='/Dialogs' element={<Dialogs dialogs={props.store._state.dialogsPage.dialogs}
-                            messages={props.store._state.dialogsPage.messages} />} />
-                        // <Route path='/Profile'
-                            element={<Profile
-                                newPostText={props.store._state.profilePage.newPostText}
-                                posts={props.store._state.profilePage.posts}
-                                addPost={props.store.addPost.bind(props.store)}
-                                updateNewPostText={props.store.updateNewPostText.bind(props.store)} />
-                            } />
+                        <Route path='/users' element={<UsersContainer />} />
+                        <Route path='/dialogs' element={<DialogsContainer  />} />
+                        <Route path='/profile' element={<ProfileContainer /> } />
+                        <Route path="/profile/:userId" element={<WithRouterWrap/>} />
+                        <Route path="/login" element={<Login/>} />
 
                         {/* <Route path ='/News' element={<News/>} />
           <Route path ='/Music' element={<Music/>} />
@@ -36,8 +33,14 @@ const App = (props: StorePropsType) => {
                     </Routes>
                 </div>
             </div>
-        </BrowserRouter>);
+        </BrowserRouter>
+        );
 }
 export default App;
 
+
+const WithRouterWrap = () => {
+    let { userId } = useParams(); 
+    return <ProfileContainer userId={userId}/> 
+}
 

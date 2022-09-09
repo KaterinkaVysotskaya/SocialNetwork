@@ -1,5 +1,21 @@
+
 .descriptionBlock {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: antiquewhite;
+    display: flex;
     padding: 10px;
+    flex-direction: column;
 }
 
-
+.descriptionBlock span {
+    padding: 10px;
+   
+    
+}
+.descriptionBlock img {
+    height: 200px;
+    width: 200px;
+    padding: 10px;
+   
+    
+}

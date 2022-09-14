@@ -50,7 +50,7 @@ class ProfileContainer extends React.Component<OwnPropsType>{
 
     componentDidMount() {
 
-    let userId = this.props.userId ? this.props.userId : '2'
+    let userId = this.props.userId ? this.props.userId : '12551'
     this.props.getUserProfile(userId)
     this.props.getStatus(userId)
       
@@ -61,7 +61,7 @@ class ProfileContainer extends React.Component<OwnPropsType>{
         return (
             <>
                 <Profile profile={this.props.profile} 
-                            status={this.props.getStatus}
+                            status={this.props.status}
                             updateStatus={this.props.updateStatus}/>
             </>
         )

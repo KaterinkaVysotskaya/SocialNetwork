@@ -22,7 +22,7 @@ class ProfileStatus extends React.Component<ProfileStatusType> {
         this.setState({
             editMode: false
         })
-        this.props.updateStatus(this.props.status)
+        this.props.updateStatus(this.state.status)
     }
     onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
         this.setState({
@@ -38,7 +38,8 @@ class ProfileStatus extends React.Component<ProfileStatusType> {
     }
  
     render() {
-        debugger
+
+        console.log(this.state.editMode)
         return (
             <>
                 <div>

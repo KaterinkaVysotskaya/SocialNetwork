@@ -15,7 +15,7 @@ export type PostsType = Array<PostType>
 
 export type ProfilePropsType = {
     profile: ProfileType | null
-    status: any
+    status: string
     updateStatus: (status: string) => void
 }
 

@@ -76,7 +76,7 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 }
 
 
-export default connect<MapStateToPropsType, MapDispatchToPropsType, PropsType, AppStateType>(mapStateToProps,  {
+export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,  {
     follow, unfollow, setCurrentPageAC, getUsers
 })(UsersContainer) 
 

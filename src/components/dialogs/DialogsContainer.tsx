@@ -1,5 +1,5 @@
-import React, { ChangeEvent, ComponentType } from 'react'
-import { sendMessageAC, UpdateNewMessageBodyAC } from "../../redux/dialogs-reducer";
+import React, { ComponentType } from 'react'
+import { sendMessageAC } from "../../redux/dialogs-reducer";
 import Dialogs from './Dialogs';
 import { connect } from 'react-redux';
 import { AppStateType } from '../../redux/redux-store';
@@ -17,11 +17,8 @@ let mapStateToProps = (state: AppStateType) =>{
 }
 let mapDispatchToProps = (dispatch: Dispatch) =>{
     return {
-        updateNewMessageBody:(body: string)=>{
-            dispatch(UpdateNewMessageBodyAC(body))
-        },
-        sendMessage:()=>{
-            dispatch(sendMessageAC())
+        sendMessage:(newMessageBody: string)=>{
+            dispatch(sendMessageAC(newMessageBody))
         }
     }
 }

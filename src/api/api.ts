@@ -58,6 +58,14 @@ export const profileAPI = {
 export const authAPI = {
     me() {
         return instance.get<ResponseType<{id: number, email: string, login: string} >>(`auth/me`)
+    },
+    login(data: LoginParamsType) {
+        return instance.post<LoginParamsType, AxiosResponse<ResponseType<{userId: number}>>>('auth/login', data)
     }
 }
-
+export type LoginParamsType = {
+    email: string
+    password: string
+    rememberMe?: boolean
+    captcha?: boolean
+}

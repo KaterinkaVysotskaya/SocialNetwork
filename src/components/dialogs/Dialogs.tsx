@@ -2,15 +2,14 @@ import React, { ChangeEvent } from 'react'
 import s from './Dialogs.module.css'
 import DialogItem from "./DialogsItem/DialogsItem";
 import Message from "./Message/Message";
-import {  sendMessageAC,  UpdateNewMessageBodyAC} from "../../redux/dialogs-reducer";
 import { DialogsType, MessageType } from '../../redux/store';
-import { Navigate } from 'react-router-dom';
-
-
+import {useFormik} from "formik";
+import { TextField } from '@mui/material';
+import Button from "@mui/material/Button";
 
 type DialogsPropsType = {
     updateNewMessageBody: (body: any)=>void
-    sendMessage: ()=>void
+    sendMessage: (values: string)=>void
     dialogsPage:  {
         dialogs: DialogsType[]
         messages: MessageType[]
@@ -20,21 +19,18 @@ type DialogsPropsType = {
 }
 
 const Dialogs = (props: DialogsPropsType) => {
+    const formik = useFormik({
+        initialValues: {
+            newMessageBody: ''
+        },
+        onSubmit: values => {
+            props.sendMessage(values.newMessageBody)
+        }})
     let state = props.dialogsPage
 
     let dialogsElements = state.dialogs.map(d => <DialogItem name={d.name} id={d.id} key={d.id}photo={d.photo}/>);
+
     let messagesElements = state.messages.map(m => <Message message={m.message} key = {m.id}/>)
-    let newMessageBody = state.newMessageBody
-
-    let onSendMessageClick = ()=> {
-        props.sendMessage()
-
-    }
-    let onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>)=> {
-        let body = e.target.value
-        props.updateNewMessageBody(body)
-    }
-    
 
     return (
 
@@ -46,12 +42,22 @@ const Dialogs = (props: DialogsPropsType) => {
                <div>
                    {messagesElements}
                 </div> 
-                <div>
-                    <div><textarea value ={newMessageBody}
-                                     placeholder='Enter your message'
-                                     onChange = {onNewMessageChange}></textarea></div>
-                    <div><button onClick={onSendMessageClick}>send</button></div>
-                </div>
+                <form onSubmit={formik.handleSubmit}>
+                    <div>
+                        <TextField
+                            type='textarea'
+                            margin="normal"
+                            placeholder='Enter your message'
+                            {...formik.getFieldProps('newMessageBody')}
+                            ></TextField>
+                    </div>
+                    <div>
+                        <Button
+                            type={'submit'} variant={'contained'} color={'primary'}>
+                            Send
+                        </Button>
+                    </div>
+                </form>
             </div>
         </div>
     )

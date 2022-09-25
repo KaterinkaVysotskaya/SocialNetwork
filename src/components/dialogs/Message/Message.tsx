@@ -18,7 +18,7 @@ const Message = (props: messagePropsType) => {
                   className={s.message}>
                 {props.message}
             </textarea>
-        <button onClick={addMessage}>send</button>
+        {/*<button onClick={addMessage}>send</button>*/}
         </>
     )
 

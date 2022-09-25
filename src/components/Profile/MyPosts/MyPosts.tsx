@@ -1,51 +1,45 @@
 import React, { ChangeEvent } from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
-import {  addPostAC, UpdateNewPostTextAC } from "../../../redux/profile-reducer";
-import { ActionsType, PostType } from '../../../redux/store';
+import {  PostType } from '../../../redux/store';
+import {useFormik} from "formik";
+import {TextField} from "@mui/material";
+import Button from "@mui/material/Button";
 
 type MyPostsType = {
-  newPostText: string
   posts: PostType[]
-  updateNewPostText: (text: any)=>void
-  addPost: ()=>void
+  addPost: (newPost: string)=>void
 }
 
 const MyPosts = (props: MyPostsType) => {
-
+  const formik = useFormik({
+    initialValues: {
+      newPost: ''
+    },
+    onSubmit: values => {
+      props.addPost(values.newPost)
+    }})
   let postsElements =
     props.posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount} />)
 
-  let newPostElement = React.createRef<HTMLTextAreaElement>()
-
-  let onAddPost = () => {
-    if (newPostElement.current) {
-      props.addPost()
-    }
-
-  }
-  let onPostChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
-    let text = newPostElement.current?.value
-    props.updateNewPostText(text)
-
-
-  }
 
   return (
     <div className={s.postsBlock}>
       <h3>My Posts</h3>
-      <div>
+      <form onSubmit={formik.handleSubmit}>
         <div>
-          <textarea onChange={onPostChange}
-                     ref={newPostElement}
-                      value={props.newPostText} />
+          <TextField type='textarea'
+                     margin="normal"
+                     placeholder='Enter your message'
+                     {...formik.getFieldProps('newPost')}
+          />
 
         </div>
         <div>
-          <button onClick={onAddPost} >Add post</button>
+          <Button type={'submit'} variant={'contained'} color={'primary'} >Add post</Button>
         </div>
 
-      </div>
+      </form>
       <div className={s.posts}>
         {postsElements}
 

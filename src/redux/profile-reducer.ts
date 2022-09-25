@@ -9,7 +9,6 @@ const SET_STATUS = 'SET_STATUS'
 
 export type initialStateType = {
     posts: Array<PostType>
-    newPostText: string
     profile: null | ProfileType
     status: string
 }
@@ -22,7 +21,6 @@ let initialState: initialStateType  =  {
         { id: 4, message: "It's my third post", likesCount: 11 },
 
     ],
-    newPostText: 'it-kamasutra.com',
     profile: null,
     status: ''
  
@@ -33,19 +31,15 @@ let initialState: initialStateType  =  {
         case 'ADD-POST': {
            let newPost: PostType = {
             id: 5,
-            message: state.newPostText,
+            message: action.newPost,
             likesCount: 0
         }
   
              return {
                  ...state, 
-                posts: [...state.posts, newPost],
-                newPostText: ''}
+                posts: [...state.posts, newPost]}
     }
-        case 'UPDATE-NEW-POST-TEXT' : {
-          return   {...state,
-                    newPostText:action.newText }         
-        }
+
         case SET_USER_PROFILE : {
           return   {...state,
                     profile: action.profile }         
@@ -61,18 +55,13 @@ let initialState: initialStateType  =  {
     }
 
   
-export const addPostAC = () => {
+export const addPostAC = (newPost: string) => {
     return {
-        type: 'ADD-POST',
+        type: 'ADD-POST', newPost
         // newPostElement: newPostElement
     } as const
 }
-export const UpdateNewPostTextAC = (newText: string) => {
-    return {
-        type: 'UPDATE-NEW-POST-TEXT',
-        newText: newText
-    } as const
-}
+
 export const setUserProfile = (profile: ProfileType) => {
     return {
         type: SET_USER_PROFILE,

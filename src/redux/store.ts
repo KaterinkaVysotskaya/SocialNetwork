@@ -1,6 +1,6 @@
-import { setUserData } from "./auth-reducer";
-import dialogsReducer, { sendMessageAC, UpdateNewMessageBodyAC } from "./dialogs-reducer";
-import profileReducer, { addPostAC, setStatus, setUserProfile, UpdateNewPostTextAC } from "./profile-reducer";
+import {setIsLoggedInAC, setUserData} from "./auth-reducer";
+import { sendMessageAC } from "./dialogs-reducer";
+import  { addPostAC, setStatus, setUserProfile} from "./profile-reducer";
 import { followSuccessAC, setCurrentPageAC, setTotalUsersCountAC, setUsersAC, toggleFollowingProgressAC, toggleIsFetchingAC, unfollowSuccessAC } from "./Users-reducer";
 
 
@@ -46,9 +46,7 @@ let store: StoreType = {
                 { id: 4, message: 'Yo' },
                 { id: 5, message: 'Hi' },
                 { id: 6, message: 'Hi' },
-            ],
-            newMessageBody: ''
-
+            ]
         }
 
     },
@@ -94,9 +92,7 @@ let store: StoreType = {
 }
 
 export type ActionsType = ReturnType<typeof addPostAC> |
-                          ReturnType<typeof UpdateNewPostTextAC> |
-                          ReturnType<typeof sendMessageAC> |  
-                          ReturnType<typeof UpdateNewMessageBodyAC> |
+                          ReturnType<typeof sendMessageAC> |
                           ReturnType<typeof followSuccessAC> |
                           ReturnType<typeof unfollowSuccessAC> |
                           ReturnType<typeof setUsersAC> |
@@ -106,7 +102,8 @@ export type ActionsType = ReturnType<typeof addPostAC> |
                           ReturnType<typeof setUserProfile> |
                           ReturnType<typeof setUserData> |
                           ReturnType<typeof toggleFollowingProgressAC > |
-                          ReturnType<typeof setStatus >
+                          ReturnType<typeof setStatus > |
+                          ReturnType<typeof setIsLoggedInAC >
 
 
 
@@ -149,7 +146,6 @@ export type StateType = {
     dialogsPage: {
         dialogs: DialogsType[]
         messages: MessageType[]
-        newMessageBody: string
     }
 }
 

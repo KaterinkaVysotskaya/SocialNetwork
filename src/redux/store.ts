@@ -1,4 +1,4 @@
-import {setIsLoggedInAC, setUserData} from "./auth-reducer";
+import { setAuthUserData} from "./auth-reducer";
 import { sendMessageAC } from "./dialogs-reducer";
 import  { addPostAC, setStatus, setUserProfile} from "./profile-reducer";
 import { followSuccessAC, setCurrentPageAC, setTotalUsersCountAC, setUsersAC, toggleFollowingProgressAC, toggleIsFetchingAC, unfollowSuccessAC } from "./Users-reducer";
@@ -100,10 +100,9 @@ export type ActionsType = ReturnType<typeof addPostAC> |
                           ReturnType<typeof setTotalUsersCountAC> |
                           ReturnType<typeof toggleIsFetchingAC> |
                           ReturnType<typeof setUserProfile> |
-                          ReturnType<typeof setUserData> |
+                          ReturnType<typeof setAuthUserData> |
                           ReturnType<typeof toggleFollowingProgressAC > |
-                          ReturnType<typeof setStatus > |
-                          ReturnType<typeof setIsLoggedInAC >
+                          ReturnType<typeof setStatus >
 
 
 

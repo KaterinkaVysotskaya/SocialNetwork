@@ -32,10 +32,11 @@ type MapStateToPropsType  = {
     profile: ProfileType | null
     isAuth: boolean
     status: string
+    authorisedUserId: number | null
 }
 type MapDispatchToPropsType = {
-    getUserProfile: (userId: string) => void
-    getStatus: (userId: string) => string
+    getUserProfile: (userId: string | number | null) => void
+    getStatus: (userId: string| number | null) => string
     updateStatus: (status: string) => void
 }
 
@@ -50,7 +51,11 @@ class ProfileContainer extends React.Component<OwnPropsType>{
 
     componentDidMount() {
 
-    let userId = this.props.userId ? this.props.userId : '12551'
+    let userId = this.props.userId
+        ? this.props.userId
+        : this.props.authorisedUserId
+
+
     this.props.getUserProfile(userId)
     this.props.getStatus(userId)
       
@@ -77,6 +82,7 @@ let AuthRedirectComponent = (props: any) => {
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
     profile: state.profilePage.profile,
     isAuth: state.auth.isAuth,
+    authorisedUserId: state.auth.userId,
     status: state.profilePage.status
 })
 

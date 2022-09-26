@@ -25,6 +25,7 @@ const Dialogs = (props: DialogsPropsType) => {
         },
         onSubmit: values => {
             props.sendMessage(values.newMessageBody)
+            formik.resetForm()
         }})
     let state = props.dialogsPage
 

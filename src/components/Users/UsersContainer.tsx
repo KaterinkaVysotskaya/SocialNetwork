@@ -4,10 +4,13 @@ import { AppStateType } from '../../redux/redux-store'
 import { follow , getUsers, setCurrentPageAC , unfollow , UserType } from '../../redux/Users-reducer'
 import Users from './Users'
 import Preloader from '../common/preloader/Preloader'
+import {Navigate} from "react-router-dom";
+import {CircularProgress} from "@mui/material";
 
 
 
 type MapStateToPropsType = {
+    isAuth: boolean
     users: Array<UserType>
     pageSize: number
     totalUsersCount: number
@@ -48,8 +51,9 @@ class UsersContainer extends React.Component<PropsType> {
     }
 
     render () {
+        if(!this.props.isAuth) return <Navigate to='/login'/>
       return <>
-        {this.props.isFetching ? <Preloader/>: null}
+        {this.props.isFetching ? <CircularProgress/>: null}
       <Users totalUsersCount={this.props.totalUsersCount}
                     pageSize={this.props.pageSize}
                     currentPage={this.props.currentPage}
@@ -66,6 +70,7 @@ class UsersContainer extends React.Component<PropsType> {
 
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
+        isAuth: state.auth.isAuth,
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,

@@ -15,7 +15,7 @@ const instance = axios.create({
      error: null | string
 }
 
-type ResponseType<T = {}> = {
+ export type ResponseType<T = {}> = {
     resultCode: number
     messages: string[]
     data: T
@@ -61,6 +61,9 @@ export const authAPI = {
     },
     login(data: LoginParamsType) {
         return instance.post<LoginParamsType, AxiosResponse<ResponseType<{userId: number}>>>('auth/login', data)
+    },
+    logout() {
+        return instance.delete<ResponseType>('auth/login')
     }
 }
 export type LoginParamsType = {

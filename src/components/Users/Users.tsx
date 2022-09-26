@@ -1,10 +1,9 @@
 import React from 'react'
 import s from './Users.module.css'
 import userPhoto from '../../assets/images/user.png'
-import { toggleFollowingProgressAC, UserType } from '../../redux/Users-reducer'
+import {  UserType } from '../../redux/Users-reducer'
 import { NavLink } from 'react-router-dom'
-import axios from 'axios'
-import { usersAPI } from '../../api/api'
+import Button from "@mui/material/Button";
 
 
 
@@ -43,11 +42,11 @@ const Users = (props: UsersPropsType) => {
                         </div>
                         <div>
                             {u.followed
-                                ? <button disabled={props.followingInProgress.some(id => id === u.id)} 
-                                          onClick={() => { props.unfollow(u.id) }}> Unfollow</button>
+                                ? <Button disabled={props.followingInProgress.some(id => id === u.id)}
+                                          onClick={() => { props.unfollow(u.id) }}> Unfollow</Button>
 
-                                : <button disabled={props.followingInProgress.some(id => id === u.id)}
-                                          onClick={() => { props.follow(u.id)}}>Follow</button>
+                                : <Button disabled={props.followingInProgress.some(id => id === u.id)}
+                                          onClick={() => { props.follow(u.id)}}>Follow</Button>
                             }
                         </div>
                     </span>

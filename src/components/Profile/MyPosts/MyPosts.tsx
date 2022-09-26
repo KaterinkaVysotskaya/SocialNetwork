@@ -18,6 +18,7 @@ const MyPosts = (props: MyPostsType) => {
     },
     onSubmit: values => {
       props.addPost(values.newPost)
+      formik.resetForm()
     }})
   let postsElements =
     props.posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount} />)

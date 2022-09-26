@@ -8,10 +8,14 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from "formik";
-import {useDispatch} from "react-redux";
-import {loginTC} from "../../redux/auth-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {login} from "../../redux/auth-reducer";
+import {navigate} from "@reach/router";
+import { Navigate } from 'react-router-dom';
+import {useAppSelector} from "../../redux/redux-store";
 
  const Login = () => {
+     const isAuth = useAppSelector(state=>state.auth.isAuth )
      const dispatch = useDispatch()
      const formik = useFormik({
          initialValues: {
@@ -20,8 +24,8 @@ import {loginTC} from "../../redux/auth-reducer";
              rememberMe: false,
          },
          onSubmit: values => {
-            dispatch(loginTC(values))
-
+            dispatch(login(values))
+             formik.resetForm()
          },
          validate: (values) => {
              const errors: FormikErrorType = {};
@@ -38,6 +42,9 @@ import {loginTC} from "../../redux/auth-reducer";
              return errors;
          },
      })
+     if (isAuth) {
+         return <Navigate to={'/'}/>
+     }
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>
             <form onSubmit={formik.handleSubmit}>
@@ -58,7 +65,7 @@ import {loginTC} from "../../redux/auth-reducer";
                                    {...formik.getFieldProps('email')}
                         />
                         {formik.touched.email && formik.errors.email ? (
-                            <div style={{color: 'red'}}>{formik.errors.email}</div>
+                            <div style={{color: 'red', borderColor: 'red' }}>{formik.errors.email}</div>
                         ) : null}
                         <TextField type="password"
                                    label="Password"

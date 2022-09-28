@@ -3,7 +3,9 @@ import Preloader from '../common/preloader/Preloader';
 import { ProfileType } from './ProfileContainer';
 
 import s from './ProfileInfo.module.css';
-import ProfileStatus from './ProfileStatus';
+import ProfileStatusWithClass from './ProfileStatusWithClass';
+import {CircularProgress} from "@mui/material";
+import ProfileStatus from "./ProfileStatus";
 
 type ProfileInfoType = {
   profile: ProfileType | null
@@ -14,7 +16,7 @@ type ProfileInfoType = {
 const ProfileInfo = (props: ProfileInfoType) => {
 
   if (!props.profile) {
-    return <Preloader />
+    return <CircularProgress />
   }
 console.log('props', props)
   return (

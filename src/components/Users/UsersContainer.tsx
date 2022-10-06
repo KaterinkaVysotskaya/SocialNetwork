@@ -3,11 +3,8 @@ import { connect } from 'react-redux'
 import { AppStateType } from '../../redux/redux-store'
 import { follow , getUsers, setCurrentPageAC , unfollow , UserType } from '../../redux/Users-reducer'
 import Users from './Users'
-import Preloader from '../common/preloader/Preloader'
 import {Navigate} from "react-router-dom";
 import {CircularProgress} from "@mui/material";
-
-
 
 type MapStateToPropsType = {
     isAuth: boolean

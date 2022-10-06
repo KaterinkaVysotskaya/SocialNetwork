@@ -11,7 +11,8 @@ type MyPostsType = {
   addPost: (newPost: string)=>void
 }
 
-const MyPosts = (props: MyPostsType) => {
+const MyPosts = React.memo(
+    (props: MyPostsType) => {
   const formik = useFormik({
     initialValues: {
       newPost: ''
@@ -48,6 +49,6 @@ const MyPosts = (props: MyPostsType) => {
     </div>
   )
 
-}
+})
 
 export default MyPosts;

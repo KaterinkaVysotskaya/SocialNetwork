@@ -5,7 +5,7 @@ import {HeaderPropsType} from "./HeaderContainer";
 import Button from "@mui/material/Button";
 
 
-const Header = (props: HeaderPropsType) => {
+const Header = React.memo((props: HeaderPropsType) => {
     return <header className={s.header}>
     <img src='http://a.espncdn.com/combiner/i?img=%2Fi%2Fteamlogos%2Fncaa%2F500%2F41.png' />
   
@@ -16,6 +16,6 @@ const Header = (props: HeaderPropsType) => {
       
     </div>
   </header>
-}
+})
 
 export default Header;

@@ -39,8 +39,12 @@ let initialState: initialStateType  =  {
                  ...state, 
                 posts: [...state.posts, newPost]}
     }
+         case "DELETE-POST": {
+             return {
+                 ...state, posts: state.posts.filter(p => p.id != action.postId)}
+         }
 
-        case SET_USER_PROFILE : {
+         case SET_USER_PROFILE : {
           return   {...state,
                     profile: action.profile }         
         }
@@ -61,7 +65,11 @@ export const addPostAC = (newPost: string) => {
         // newPostElement: newPostElement
     } as const
 }
-
+export const deletPostAC = (postId: number) => {
+    return {
+        type: 'DELETE-POST', postId
+    } as const
+}
 export const setUserProfile = (profile: ProfileType) => {
     return {
         type: SET_USER_PROFILE,

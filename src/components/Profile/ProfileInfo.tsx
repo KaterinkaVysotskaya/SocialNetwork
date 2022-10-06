@@ -13,7 +13,7 @@ type ProfileInfoType = {
   updateStatus: (status: string) => void
 }
 
-const ProfileInfo = (props: ProfileInfoType) => {
+const ProfileInfo = React.memo((props: ProfileInfoType) => {
 
   if (!props.profile) {
     return <CircularProgress />
@@ -41,6 +41,6 @@ console.log('props', props)
 
     </div>
   )
-}
+})
 
 export default ProfileInfo;

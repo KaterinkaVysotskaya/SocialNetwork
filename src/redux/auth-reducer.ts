@@ -8,7 +8,7 @@ import {setAppStatusAC} from "./app-reducer";
 
 type initialStateType = typeof initialState
 
-const SET_USER_DATA = 'SET_USER_DATA'
+const SET_USER_DATA = 'samurai-network/auth/SET_USER_DATA'
 
 
 let initialState = {
@@ -35,10 +35,9 @@ export const setAuthUserData = (userId: number | null, email: string | null, log
 
 
 //Thunks
-export const getAuthUserData = () => (dispatch: Dispatch) => {
+export const getAuthUserData = () => async (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
-    authAPI.me()
-        .then(response => {
+   let response = await authAPI.me()
             if (response.data.resultCode === 0) {
                 dispatch(setAuthUserData(response.data.data.id,
                     response.data.data.email,
@@ -46,9 +45,8 @@ export const getAuthUserData = () => (dispatch: Dispatch) => {
                     true))
                 dispatch(setAppStatusAC('succeeded'))
             }
-        })
 }
-export const login = (data: LoginParamsType) =>  async(dispatch: Dispatch) => {
+export const login = (data: LoginParamsType) =>  async (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
     try{
         const res = await authAPI.login(data)

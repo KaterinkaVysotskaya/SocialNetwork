@@ -14,9 +14,9 @@ import {useAppSelector} from "./redux/redux-store";
 import {initializeAppTC} from "./redux/app-reducer";
 import {CircularProgress, LinearProgress} from "@mui/material";
 
-export type StorePropsType = {
-    store: StoreType
-}
+// export type StorePropsType = {
+//     store: StoreType
+// }
 
 function App() {
     const dispatch = useDispatch()
@@ -64,7 +64,7 @@ export default App;
 
 
 const WithRouterWrap = () => {
-    let { userId } = useParams(); 
-    return <ProfileContainer userId={userId}/> 
+    let {userId} = useParams();
+    return <ProfileContainer userId={userId}/>
 }
 

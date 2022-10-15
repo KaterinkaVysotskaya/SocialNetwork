@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate} from 'react-router-dom';
 import { getStatus, getUserProfile, updateStatus } from '../../redux/profile-reducer';
 import { AppStateType } from '../../redux/redux-store';
 import Profile from './Profile';

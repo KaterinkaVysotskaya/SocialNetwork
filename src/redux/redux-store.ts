@@ -1,4 +1,4 @@
-import { applyMiddleware, combineReducers, createStore } from "redux";
+import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import authReducer from "./auth-reducer";
 import dialogsReducer from "./dialogs-reducer";
 import profileReducer from "./profile-reducer";
@@ -16,7 +16,10 @@ let rootReducer = combineReducers({
 })
 
 export type AppStateType = ReturnType <typeof rootReducer>
-let store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
+
+// @ts-ignore
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+let store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)))
 
 export const useAppSelector: TypedUseSelectorHook<AppStateType> = useSelector
 // @ts-ignore

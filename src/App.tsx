@@ -1,22 +1,17 @@
-import React, {useEffect} from 'react';
+import React, {Suspense, lazy, useEffect} from "react";
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-import DialogsContainer from './components/dialogs/DialogsContainer';
 import {BrowserRouter, Navigate, Route, Routes, useParams} from 'react-router-dom';
-import {StoreType} from "./redux/store";
-import UsersContainer from './components/Users/UsersContainer';
-import ProfileContainer from './components/Profile/ProfileContainer';
-import Login from './components/login/Login';
 import HeaderContainer from "./components/Header/HeaderContainer";
 import CustomizedSnackbars from "./outils/ErrorSnackBar";
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "./redux/redux-store";
 import {initializeAppTC} from "./redux/app-reducer";
 import {CircularProgress, LinearProgress} from "@mui/material";
-
-// export type StorePropsType = {
-//     store: StoreType
-// }
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
+const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
+const Login = React.lazy(() => import('./components/login/Login'));
+const DialogsContainer = lazy(() => import("./components/dialogs/DialogsContainer"))
 
 function App() {
     const dispatch = useDispatch()
@@ -40,28 +35,28 @@ function App() {
                 <HeaderContainer/>
                 <CustomizedSnackbars/>
                 <div className='app-wrapper-content'>
-                    <Routes>
-                        <Route path='/' element={<ProfileContainer/>}/>
-                        <Route path='/users' element={<UsersContainer/>}/>
-                        <Route path='/dialogs' element={<DialogsContainer/>}/>
-                        <Route path='/profile' element={<ProfileContainer/>}/>
-                        <Route path="/profile/:userId" element={<WithRouterWrap/>}/>
-                        <Route path="/login" element={<Login/>}/>
-                        <Route path='/404' element={<h1>404: PAGE NOT FOUND</h1>}/>
-                        <Route path="*" element={<Navigate to='/404'/>}/>
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <Routes>
+                            <Route path='/' element={<ProfileContainer/>}/>
+                            <Route path='/users' element={<UsersContainer/>}/>
+                            <Route path='/dialogs' element={<DialogsContainer/>}/>
+                            <Route path='/profile' element={<ProfileContainer/>}/>
+                            <Route path="/profile/:userId" element={<WithRouterWrap/>}/>
+                            <Route path="/login" element={<Login/>}/>
+                            <Route path='/404' element={<h1>404: PAGE NOT FOUND</h1>}/>
+                            <Route path="*" element={<Navigate to='/404'/>}/>
 
-                        {/* <Route path ='/News' element={<News/>} />
+                            {/* <Route path ='/News' element={<News/>} />
           <Route path ='/Music' element={<Music/>} />
           <Route path ='/Settings' element={<Settings/>} /> */}
-                    </Routes>
+                        </Routes>
+                    </Suspense>
                 </div>
             </div>
         </BrowserRouter>
     );
 }
-
 export default App;
-
 
 const WithRouterWrap = () => {
     let {userId} = useParams();

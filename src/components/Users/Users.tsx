@@ -18,14 +18,17 @@ const Users = React.memo((props: UsersPropsType) => {
             <div>
                 <div>
                     <Paginator pageSize={props.pageSize}
-                               totalUsersCount={props.totalUsersCount}
+                               totalItemsCount={props.totalUsersCount}
                                currentPage={props.currentPage}
-                               onPageChanged={props.onPageChanged}/>
+                               onPageChanged={props.onPageChanged}
+                                />
                 </div>
                 {props.users.map(u =><User user={u}
                                            follow={props.follow}
                                            followingInProgress={props.followingInProgress}
-                                           unfollow={props.unfollow}/> )}
+                                           unfollow={props.unfollow}
+
+                /> )}
             </div>
     )
 })

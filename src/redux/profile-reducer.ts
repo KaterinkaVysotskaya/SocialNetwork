@@ -1,11 +1,11 @@
-import { Dispatch } from "redux"
-import { profileAPI, usersAPI } from "../api/api"
-import { ProfileType } from "../components/Profile/ProfileContainer"
-import { ActionsType, PostType } from "./store"
+import {Dispatch} from "redux"
+import {profileAPI, usersAPI} from "../api/api"
+import {ProfileType} from "../components/Profile/ProfileContainer"
+import {ActionsType, PostType} from "./store"
 
-const SET_USER_PROFILE = 'SET_USER_PROFILE'
-const SET_STATUS = 'SET_STATUS'
-
+const SET_USER_PROFILE = 'profilePage/SET_USER_PROFILE'
+const SET_STATUS = 'profilePage/SET_STATUS'
+const SAVE_PHOTOS_SUCCESS = 'profilePage/SAVE_PHOTOS_SUCCESS'
 
 export type initialStateType = {
     posts: Array<PostType>
@@ -13,56 +13,67 @@ export type initialStateType = {
     status: string
 }
 
-let initialState: initialStateType  =  {
+let initialState: initialStateType = {
     posts: [
-        { id: 1, message: 'Hi, how are you?', likesCount: 12 },
-        { id: 2, message: "It's my first post", likesCount: 11 },
-        { id: 3, message: "It's my second post", likesCount: 11 },
-        { id: 4, message: "It's my third post", likesCount: 11 },
+        {id: 1, message: 'Hi, how are you?', likesCount: 12},
+        {id: 2, message: "It's my first post", likesCount: 11},
+        {id: 3, message: "It's my second post", likesCount: 11},
+        {id: 4, message: "It's my third post", likesCount: 11},
 
     ],
     profile: null,
     status: ''
- 
+
 }
 
- const profileReducer = (state:initialStateType = initialState, action: ActionsType): initialStateType => {
-     switch (action.type) {
+const profileReducer = (state: initialStateType = initialState, action: ActionsType): initialStateType => {
+    switch (action.type) {
         case 'ADD-POST': {
-           let newPost: PostType = {
-            id: 5,
-            message: action.newPost,
-            likesCount: 0
+            let newPost: PostType = {
+                id: 5,
+                message: action.newPost,
+                likesCount: 0
+            }
+            return {
+                ...state,
+                posts: [...state.posts, newPost]
+            }
         }
-  
-             return {
-                 ...state, 
-                posts: [...state.posts, newPost]}
-    }
-         case "DELETE-POST": {
-             return {
-                 ...state, posts: state.posts.filter(p => p.id != action.postId)}
-         }
-
-         case SET_USER_PROFILE : {
-          return   {...state,
-                    profile: action.profile }         
+        case "DELETE-POST": {
+            return {
+                ...state, posts: state.posts.filter(p => p.id != action.postId)
+            }
+        }
+        case SET_USER_PROFILE : {
+            return {
+                ...state,
+                profile: action.profile
+            }
         }
         case SET_STATUS : {
-          return   {...state,
-                    status: action.status }         
+            return {
+                ...state,
+                status: action.status
+            }
         }
-          default:
-              return state
-        
-     }
+        case  SAVE_PHOTOS_SUCCESS: {
+            return {
+                ...state,
+                profile: {
+                    ...state.profile!,
+                    photos: {
+                        ...action.photos
+                    }
+                }
+            }
+        }
+        default:
+            return state
     }
-
-  
+}
 export const addPostAC = (newPost: string) => {
     return {
         type: 'ADD-POST', newPost
-        // newPostElement: newPostElement
     } as const
 }
 export const deletPostAC = (postId: number) => {
@@ -82,23 +93,35 @@ export const setStatus = (status: string) => {
         status
     } as const
 }
+export const savePhotoSuccess = (photos:  {small: string, large: string}) => {
+    return {
+        type: SAVE_PHOTOS_SUCCESS,
+        photos
+    } as const
+}
 
 
+export const getUserProfile = (userId: number) => async (dispatch: Dispatch) => {
+    let response = await usersAPI.getProfile(userId)
+    dispatch(setUserProfile(response.data))
+}
 
-export const getUserProfile = (userId: number) => async (dispatch: Dispatch) =>{
-   let response = await  usersAPI.getProfile(userId)
-        dispatch(setUserProfile(response.data))
+export const getStatus = (userId: number) => async (dispatch: Dispatch) => {
+    let response = await profileAPI.getStatus(userId)
+    dispatch(setStatus(response.data))
 }
-  
-export const getStatus = (userId: number) => async (dispatch: Dispatch) =>{
-   let response = await profileAPI.getStatus(userId)
-            dispatch(setStatus(response.data))
+export const updateStatus = (status: string) => async (dispatch: Dispatch) => {
+    let response = await profileAPI.updateStatus(status)
+    if (response.data.resultCode === 0) {
+        dispatch(setStatus(status))
+    }
 }
-export const updateStatus = (status: string ) => async (dispatch:  Dispatch) =>{
-   let response = await profileAPI.updateStatus(status)
-        if (response.data.resultCode === 0) {
-            dispatch(setStatus(status))
-        }
+export const savePhoto = (file: string) => async (dispatch: Dispatch) => {
+    let response = await profileAPI.savePhoto(file)
+    if (response.data.resultCode === 0) {
+        console.log(response.data)
+        dispatch(savePhotoSuccess(response.data.data.photos))
+    }
 }
-  
+
 export default profileReducer

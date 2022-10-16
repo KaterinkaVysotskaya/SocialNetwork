@@ -1,5 +1,6 @@
 import axios, {AxiosResponse} from 'axios'
 import {UserType} from "../redux/Users-reducer";
+import {ProfileType} from "../components/Profile/ProfileContainer";
 
 
 const instance = axios.create({
@@ -44,16 +45,24 @@ export const usersAPI = {
 
 export const profileAPI = {
     getProfile(userId: number)  {
-        return instance.get(`profile/` + userId)
+        return instance.get<ProfileType>(`profile/` + userId)
     },
     getStatus(userId: number) {
         return instance.get('profile/status/' + userId)
     },
     updateStatus(status: string) {
         return instance.put<{status: string }, AxiosResponse<ResponseType>>('profile/status', {status: status})
+    },
+    savePhoto(photoType: string) {
+        const formData: FormData = new FormData()
+        formData.append('image', photoType)
+
+        return instance.put<FormData, AxiosResponse<ResponseType<{photos: {small: string, large: string}}>>>('profile/photo', formData, {
+            headers: {
+                'Content-Type': 'form/multipart'
+            }
+        })
     }
-
-
 }
 export const authAPI = {
     me() {

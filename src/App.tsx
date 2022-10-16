@@ -1,7 +1,7 @@
 import React, {Suspense, lazy, useEffect} from "react";
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-import {BrowserRouter, Navigate, Route, Routes, useParams} from 'react-router-dom';
+import {BrowserRouter, HashRouter, Navigate, Route, Routes, useParams} from 'react-router-dom';
 import HeaderContainer from "./components/Header/HeaderContainer";
 import CustomizedSnackbars from "./outils/ErrorSnackBar";
 import {useDispatch} from "react-redux";
@@ -28,7 +28,7 @@ function App() {
         </div>
     }
     return (
-        <BrowserRouter>
+        <HashRouter >
             {status === 'loading' && <LinearProgress color="secondary"/>}
             <div className='app-wrapper'>
                 <Navbar/>
@@ -53,7 +53,7 @@ function App() {
                     </Suspense>
                 </div>
             </div>
-        </BrowserRouter>
+        </HashRouter>
     );
 }
 export default App;

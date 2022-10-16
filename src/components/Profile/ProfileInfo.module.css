@@ -9,13 +9,12 @@
 
 .descriptionBlock span {
     padding: 10px;
-   
-    
 }
 .descriptionBlock img {
     height: 200px;
     width: 200px;
     padding: 10px;
-   
-    
+}
+.mainPhoto {
+    max-width: 200px;
 }

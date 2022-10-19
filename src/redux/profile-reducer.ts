@@ -1,7 +1,10 @@
 import {Dispatch} from "redux"
 import {profileAPI, usersAPI} from "../api/api"
 import {ProfileType} from "../components/Profile/ProfileContainer"
-import {ActionsType, PostType} from "./store"
+import {ActionsType, PostType, StateType} from "./store"
+import {AppStateType} from "./redux-store";
+import {handleServerAppError} from "../outils/error-utils";
+
 
 const SET_USER_PROFILE = 'profilePage/SET_USER_PROFILE'
 const SET_STATUS = 'profilePage/SET_STATUS'
@@ -119,8 +122,17 @@ export const updateStatus = (status: string) => async (dispatch: Dispatch) => {
 export const savePhoto = (file: string) => async (dispatch: Dispatch) => {
     let response = await profileAPI.savePhoto(file)
     if (response.data.resultCode === 0) {
-        console.log(response.data)
         dispatch(savePhotoSuccess(response.data.data.photos))
+    }
+}
+export const saveProfile = (profile: ProfileType) => async (dispatch: Dispatch, getState: () => AppStateType) => {
+    const userId = getState().auth.userId
+    let response = await profileAPI.saveProfile(profile)
+    if (response.data.resultCode === 0) {
+        // @ts-ignore
+        dispatch(getUserProfile(userId))
+    } else {
+        handleServerAppError(response.data, dispatch)
     }
 }
 

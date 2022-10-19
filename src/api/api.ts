@@ -2,7 +2,6 @@ import axios, {AxiosResponse} from 'axios'
 import {UserType} from "../redux/Users-reducer";
 import {ProfileType} from "../components/Profile/ProfileContainer";
 
-
 const instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -39,7 +38,7 @@ export const usersAPI = {
     getProfile(userId: number)  {
         console.warn('Obsolete method. Please use profileAPI object');
         return profileAPI.getProfile(userId)
-    }
+    },
 }
 
 
@@ -62,7 +61,10 @@ export const profileAPI = {
                 'Content-Type': 'form/multipart'
             }
         })
-    }
+    },
+    saveProfile(profile: ProfileType) {
+        return instance.put<ProfileType, AxiosResponse<ResponseType>>('profile', profile)
+    },
 }
 export const authAPI = {
     me() {

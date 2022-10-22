@@ -3,7 +3,8 @@ import {profileAPI, usersAPI} from "../api/api"
 import {ProfileType} from "../components/Profile/ProfileContainer"
 import {ActionsType, PostType, StateType} from "./store"
 import {AppStateType} from "./redux-store";
-import {handleServerAppError} from "../outils/error-utils";
+import {handleServerAppError, handleServerNetworkError} from "../outils/error-utils";
+import axios from "axios";
 
 
 const SET_USER_PROFILE = 'profilePage/SET_USER_PROFILE'
@@ -114,10 +115,18 @@ export const getStatus = (userId: number) => async (dispatch: Dispatch) => {
     dispatch(setStatus(response.data))
 }
 export const updateStatus = (status: string) => async (dispatch: Dispatch) => {
-    let response = await profileAPI.updateStatus(status)
-    if (response.data.resultCode === 0) {
-        dispatch(setStatus(status))
-    }
+   try {
+       let response = await profileAPI.updateStatus(status)
+       if (response.data.resultCode === 0) {
+           dispatch(setStatus(status))
+       } else {
+           handleServerAppError(response.data, dispatch)
+       }
+   } catch (e) {
+       if (axios.isAxiosError(e)) {
+           handleServerNetworkError(e, dispatch)
+       }
+   }
 }
 export const savePhoto = (file: string) => async (dispatch: Dispatch) => {
     let response = await profileAPI.savePhoto(file)

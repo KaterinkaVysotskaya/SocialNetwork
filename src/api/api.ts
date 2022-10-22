@@ -68,7 +68,7 @@ export const profileAPI = {
 }
 export const authAPI = {
     me() {
-        return instance.get<ResponseType<{id: number, email: string, login: string} >>(`auth/me`)
+        return instance.get<ResponseType<{id: number, email: string, login: string,  } >>(`auth/me`)
     },
     login(data: LoginParamsType) {
         return instance.post<LoginParamsType, AxiosResponse<ResponseType<{userId: number}>>>('auth/login', data)
@@ -77,9 +77,14 @@ export const authAPI = {
         return instance.delete<ResponseType>('auth/login')
     }
 }
+export const securityAPI = {
+    getCaptchaUrl() {
+        return instance.get<{url: string}>('security/get-captcha-url')
+    }
+}
 export type LoginParamsType = {
     email: string
     password: string
     rememberMe?: boolean
-    captcha?: boolean
+    captcha?: ''
 }

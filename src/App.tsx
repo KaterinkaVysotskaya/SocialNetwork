@@ -8,6 +8,7 @@ import {useDispatch} from "react-redux";
 import {useAppSelector} from "./redux/redux-store";
 import {initializeAppTC} from "./redux/app-reducer";
 import {CircularProgress, LinearProgress} from "@mui/material";
+
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
 const Login = React.lazy(() => import('./components/login/Login'));
@@ -28,7 +29,7 @@ function App() {
         </div>
     }
     return (
-        <HashRouter >
+        <BrowserRouter>
             {status === 'loading' && <LinearProgress color="secondary"/>}
             <div className='app-wrapper'>
                 <Navbar/>
@@ -47,15 +48,16 @@ function App() {
                             <Route path="*" element={<Navigate to='/404'/>}/>
 
                             {/* <Route path ='/News' element={<News/>} />
-          <Route path ='/Music' element={<Music/>} />
-          <Route path ='/Settings' element={<Settings/>} /> */}
+                             <Route path ='/Music' element={<Music/>} />
+                             <Route path ='/Settings' element={<Settings/>} /> */}
                         </Routes>
                     </Suspense>
                 </div>
             </div>
-        </HashRouter>
+        </BrowserRouter>
     );
 }
+
 export default App;
 
 const WithRouterWrap = () => {

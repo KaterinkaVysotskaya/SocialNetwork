@@ -51,6 +51,7 @@ export const initializeAppTC = () => async (dispatch: Dispatch) => {
         }
     } finally {
         dispatch(setAppIitialisedAC(true))
+        dispatch(setAppStatusAC('idle'))
     }
 }
 

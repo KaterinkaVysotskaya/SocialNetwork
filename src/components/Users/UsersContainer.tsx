@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { AppStateType } from '../../redux/redux-store'
-import { follow , getUsers, setCurrentPageAC , unfollow , UserType } from '../../redux/Users-reducer'
+import { follow , getUsers, unfollow , UserType } from '../../redux/Users-reducer'
 import Users from './Users'
 import {Navigate} from "react-router-dom";
 import {CircularProgress} from "@mui/material";
@@ -19,7 +19,7 @@ type MapStateToPropsType = {
 type MapDispatchToPropsType = {
     follow: (userId: number)=>void
     unfollow: (userId: number)=>void
-    setCurrentPageAC: (pageNumber:number)=>void
+    // setCurrentPageAC: (pageNumber:number)=>void
     getUsers : (currentPage: number, pageSize: number) => void
 }
 
@@ -79,7 +79,7 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 
 
 export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,  {
-    follow, unfollow, setCurrentPageAC, getUsers
+    follow, unfollow, getUsers
 })(UsersContainer) 
 
 

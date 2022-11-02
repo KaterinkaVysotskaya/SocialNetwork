@@ -36,7 +36,7 @@ type MapDispatchToPropsType = {
     getUserProfile: (userId: string | number | null) => void
     getStatus: (userId: string| number | null) => string
     updateStatus: (status: string) => void
-    savePhoto: any
+    savePhoto: (file: File) => void
 }
 type PropsType = {
     userId?: string

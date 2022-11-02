@@ -1,7 +1,4 @@
-import {getCaptchaUrlSuccess, setAuthUserData} from "./auth-reducer";
-import { sendMessageAC } from "./dialogs-reducer";
-import {addPostAC, deletPostAC, savePhotoSuccess, setStatus, setUserProfile} from "./profile-reducer";
-import { followSuccessAC, setCurrentPageAC, setTotalUsersCountAC, setUsersAC, toggleFollowingProgressAC, toggleIsFetchingAC, unfollowSuccessAC } from "./Users-reducer";
+import {AnyAction} from "redux";
 
 
 let store: StoreType = {
@@ -91,30 +88,30 @@ let store: StoreType = {
     }
 }
 
-export type ActionsType = ReturnType<typeof addPostAC> |
-                          ReturnType<typeof sendMessageAC> |
-                          ReturnType<typeof followSuccessAC> |
-                          ReturnType<typeof unfollowSuccessAC> |
-                          ReturnType<typeof setUsersAC> |
-                          ReturnType<typeof setCurrentPageAC> |
-                          ReturnType<typeof setTotalUsersCountAC> |
-                          ReturnType<typeof toggleIsFetchingAC> |
-                          ReturnType<typeof setUserProfile> |
-                          ReturnType<typeof setAuthUserData> |
-                          ReturnType<typeof toggleFollowingProgressAC > |
-                          ReturnType<typeof setStatus > |
-                          ReturnType<typeof deletPostAC >|
-                          ReturnType<typeof savePhotoSuccess >|
-                          ReturnType<typeof getCaptchaUrlSuccess >
-
-
+// export type ActionsType = ReturnType<typeof addPostAC> |
+//                           ReturnType<typeof sendMessageAC> |
+//                           ReturnType<typeof followSuccessAC> |
+//                           ReturnType<typeof unfollowSuccessAC> |
+//                           ReturnType<typeof setUsersAC> |
+//                           ReturnType<typeof setCurrentPageAC> |
+//                           ReturnType<typeof setTotalUsersCountAC> |
+//                           ReturnType<typeof toggleIsFetchingAC> |
+//                           ReturnType<typeof setUserProfile> |
+//                           ReturnType<typeof setAuthUserData> |
+//                           ReturnType<typeof toggleFollowingProgressAC > |
+//                           ReturnType<typeof setStatus > |
+//                           ReturnType<typeof deletPostAC >|
+//                           ReturnType<typeof savePhotoSuccess >|
+//                           ReturnType<typeof getCaptchaUrlSuccess >
+//
+//
 
 export type StoreType = {
     _state: StateType
     _callSubscriber: () => void
     getState: () => StateType
     subscribe: (observer: () => void) => void
-    dispatch: (action: ActionsType) => void
+    dispatch: (action: AnyAction) => void
 
 
 
@@ -150,9 +147,6 @@ export type StateType = {
         messages: MessageType[]
     }
 }
-
-
-
 export default store;
 
 

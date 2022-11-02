@@ -4,11 +4,6 @@ import { PostType } from "../../redux/store";
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import { ProfileType } from './ProfileContainer';
 
-//   type PostType = {
-//     id: number
-//     message: string
-//     likeCount: number
-// }
 export type PostsType = Array<PostType>
 
 export type ProfilePropsType = {
@@ -16,7 +11,7 @@ export type ProfilePropsType = {
     status: string
     updateStatus: (status: string) => void
     isOwner: boolean
-    savePhoto: any
+    savePhoto: (file: File) => void
 }
 
 const Profile = React.memo((props: ProfilePropsType) => {

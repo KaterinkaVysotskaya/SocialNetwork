@@ -12,7 +12,7 @@ type ProfileInfoType = {
     status: string
     updateStatus: (status: string) => void
     isOwner: boolean
-    savePhoto: any
+    savePhoto: (file: File) => void
 }
 
 const ProfileInfo = React.memo(({profile, updateStatus, status, isOwner, savePhoto}: ProfileInfoType) => {

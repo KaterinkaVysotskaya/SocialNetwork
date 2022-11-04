@@ -8,7 +8,7 @@ export const instance = axios.create({
     }
 })
 
-export type ResponseType<T = {}> = {
+export type BaseResponseType<T = {}> = {
     resultCode: number
     messages: string[]
     data: T

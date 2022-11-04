@@ -1,7 +1,8 @@
 import {Dispatch} from "redux"
 import {updateObjectInArray} from "../outils/object-helpers";
-import {AppStateType, BaseThunkType, InferActionsType} from "./redux-store";
+import { BaseThunkType, InferActionsType} from "./redux-store";
 import {usersAPI} from "../api/usersAPI";
+import {BaseResponseType} from "../api/api";
 
 type PhotosType = {
     small: string
@@ -16,7 +17,8 @@ export  type UserType = {
     location: { city: string, country: string },
 }
 
-type initialStateType = typeof initialState
+export type initialStateType = typeof initialState
+export type FilterType = typeof initialState.filter
 
 let initialState = {
     users: [] as Array<UserType>,
@@ -24,8 +26,11 @@ let initialState = {
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: false,
-    followingInProgress: [] as any []
-
+    followingInProgress: [] as any [],
+    filter: {
+        term: '',
+        friend: null as null | boolean
+    }
 }
 type ThunkType = BaseThunkType<ActionsType>
 const usersReducer = (state: initialStateType = initialState, action: ActionsType): initialStateType => {
@@ -48,6 +53,8 @@ const usersReducer = (state: initialStateType = initialState, action: ActionsTyp
             return {...state, totalUsersCount: action.count}
         case 'USERS/TOGGLE_IS_FETCHING':
             return {...state, isFetching: action.isFetching}
+        case 'USERS/SET_FILTER':
+            return {...state, filter: action.payload}
         case 'USERS/TOGGLE_IS_FOLLOWING_PROGRESS':
             return {
                 ...state,
@@ -66,6 +73,7 @@ export const usersActions = {
     unfollowSuccessAC: (userId: number) => ({type: 'USERS/UNFOLLOW', userId}) as const,
     setUsersAC: (users: Array<UserType>) => ({type: 'USERS/SET_USERS', users}) as const,
     setCurrentPageAC: (currentPage: number) => ({type: 'USERS/SET_CURRENT_PAGE', currentPage}) as const,
+    setFilter:(filter: FilterType)=>({type: 'USERS/SET_FILTER', payload: filter}) as const,
     setTotalUsersCountAC: (totalUsersCount: number) => ({
         type: 'USERS/SET_TOTAL_USERS_COUNT',
         count: totalUsersCount
@@ -79,19 +87,20 @@ export const usersActions = {
 }
 
 
-export const getUsers = (page: number, pageSize: number):ThunkType => {
+export const getUsers = (page: number, pageSize: number, filter: FilterType):ThunkType => {
     return async (dispatch: Dispatch) => {
         dispatch(usersActions.toggleIsFetchingAC(true))
         dispatch(usersActions.setCurrentPageAC(page))
+        dispatch(usersActions.setFilter(filter))
 
-        let data = await usersAPI.getUsers(page, pageSize)
+        let data = await usersAPI.getUsers(page, pageSize, filter.term, filter.friend)
         dispatch(usersActions.toggleIsFetchingAC(false))
         dispatch(usersActions.setUsersAC(data.items))
         dispatch(usersActions.setTotalUsersCountAC(data.totalCount))
     }
 }
 
-const followUnfollowFlow = async (dispatch: Dispatch, userId: number, apiMethod: any, actionCreator: (userId: number) => ActionsType) => {
+const followUnfollowFlow = async (dispatch: Dispatch, userId: number, apiMethod: (userId: number)=>Promise<BaseResponseType>, actionCreator: (userId: number) => ActionsType) => {
     dispatch(usersActions.toggleFollowingProgressAC(true, userId))
 
     let data = await apiMethod(userId)
@@ -104,12 +113,12 @@ const followUnfollowFlow = async (dispatch: Dispatch, userId: number, apiMethod:
 
 export const follow = (userId: number): ThunkType => {
     return async (dispatch: Dispatch) => {
-        followUnfollowFlow(dispatch, userId, usersAPI.follow.bind(usersAPI), usersActions.followSuccessAC)
+        await followUnfollowFlow(dispatch, userId, usersAPI.follow.bind(usersAPI), usersActions.followSuccessAC)
     }
 }
 export const unfollow = (userId: number) :ThunkType=> {
     return async (dispatch: Dispatch) => {
-        followUnfollowFlow(dispatch, userId, usersAPI.unfollow.bind(usersAPI), usersActions.unfollowSuccessAC)
+        await followUnfollowFlow(dispatch, userId, usersAPI.unfollow.bind(usersAPI), usersActions.unfollowSuccessAC)
     }
 }
 

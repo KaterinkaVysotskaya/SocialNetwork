@@ -131,11 +131,6 @@ export type MessageType = {
     id: number
     message: string
 }
-export type PhotosType = {
-    id: number
-    photo: string
-}
-
 export type StateType = {
     profilePage: {
         posts: PostType[]

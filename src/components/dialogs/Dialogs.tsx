@@ -1,21 +1,20 @@
-import React, { ChangeEvent } from 'react'
+import React from 'react'
 import s from './Dialogs.module.css'
 import DialogItem from "./DialogsItem/DialogsItem";
 import Message from "./Message/Message";
-import { DialogsType, MessageType } from '../../redux/store';
+import {DialogsType, MessageType} from '../../redux/store';
 import {useFormik} from "formik";
-import { TextField } from '@mui/material';
+import {TextField} from '@mui/material';
 import Button from "@mui/material/Button";
 
 type DialogsPropsType = {
-    updateNewMessageBody: (body: any)=>void
-    sendMessage: (values: string)=>void
-    dialogsPage:  {
+    updateNewMessageBody: (body: any) => void
+    sendMessage: (values: string) => void
+    dialogsPage: {
         dialogs: DialogsType[]
         messages: MessageType[]
         newMessageBody: string
     }
-    isAuth: boolean
 }
 
 const Dialogs = (props: DialogsPropsType) => {
@@ -26,12 +25,13 @@ const Dialogs = (props: DialogsPropsType) => {
         onSubmit: values => {
             props.sendMessage(values.newMessageBody)
             formik.resetForm()
-        }})
+        }
+    })
     let state = props.dialogsPage
 
-    let dialogsElements = state.dialogs.map(d => <DialogItem name={d.name} id={d.id} key={d.id}photo={d.photo}/>);
+    let dialogsElements = state.dialogs.map(d => <DialogItem name={d.name} id={d.id} key={d.id} photo={d.photo}/>);
 
-    let messagesElements = state.messages.map(m => <Message message={m.message} key = {m.id}/>)
+    let messagesElements = state.messages.map(m => <Message message={m.message} key={m.id}/>)
 
     return (
 
@@ -40,9 +40,9 @@ const Dialogs = (props: DialogsPropsType) => {
                 {dialogsElements}
             </div>
             <div className={s.messages}>
-               <div>
-                   {messagesElements}
-                </div> 
+                <div>
+                    {messagesElements}
+                </div>
                 <form onSubmit={formik.handleSubmit}>
                     <div>
                         <TextField
@@ -50,7 +50,7 @@ const Dialogs = (props: DialogsPropsType) => {
                             margin="normal"
                             placeholder='Enter your message'
                             {...formik.getFieldProps('newMessageBody')}
-                            ></TextField>
+                        ></TextField>
                     </div>
                     <div>
                         <Button

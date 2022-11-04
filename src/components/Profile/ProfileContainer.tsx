@@ -26,12 +26,9 @@ export type ProfileType = {
         large: string
     }
 }
-type MapStateToPropsType  = {
-    profile: ProfileType | null
-    isAuth: boolean
-    status: string
-    authorisedUserId: number | null
-}
+
+type MapStateToPropsType = ReturnType<typeof mapStateToProps>
+
 type MapDispatchToPropsType = {
     getUserProfile: (userId: string | number | null) => void
     getStatus: (userId: string| number | null) => string
@@ -55,23 +52,20 @@ class ProfileContainer extends React.Component<OwnPropsType>{
     componentDidMount() {
         this.refrechProfile()
     }
-    componentDidUpdate(prevProps: Readonly<OwnPropsType>, prevState: Readonly<{}>, snapshot?: any) {
+    componentDidUpdate(prevProps: Readonly<OwnPropsType>, prevState: Readonly<{}>) {
         if (this.props.userId != prevProps.userId) {
             this.refrechProfile()
         }
     }
 
     render() {
-        if(!this.props.isAuth) return <Navigate to='/login'/>
         return (
-            <>
-                <Profile profile={this.props.profile} 
+                <Profile profile={this.props.profile}
                          status={this.props.status}
                          updateStatus={this.props.updateStatus}
                          isOwner={!this.props.userId}
                          savePhoto={this.props.savePhoto}
                 />
-            </>
         )
     }
 }
@@ -82,11 +76,12 @@ let AuthRedirectComponent = (props: any) => {
 }
 
 
-let mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
+let mapStateToProps = (state: AppStateType)=> ({
     profile: state.profilePage.profile,
     isAuth: state.auth.isAuth,
     authorisedUserId: state.auth.userId,
     status: state.profilePage.status
 })
 
-export default connect(mapStateToProps, { getUserProfile, getStatus, updateStatus,savePhoto })(AuthRedirectComponent);
+export default  connect(mapStateToProps, { getUserProfile, getStatus, updateStatus,savePhoto })
+(AuthRedirectComponent);

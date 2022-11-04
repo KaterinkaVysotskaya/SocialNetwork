@@ -26,29 +26,27 @@ const ProfileInfo = React.memo(({profile, updateStatus, status, isOwner, savePho
             savePhoto(e.target.files[0])
         }
     }
-    const goToEditModeHandler = () =>{
+    const goToEditModeHandler = () => {
         setEditMode(true)
     }
     return (
         <div>
             <div className={s.descriptionWrap}>
                 <div className={s.descriptionBlock}>
-                    <img src={profile.photos.large || userPhoto} className={s.mainPhoto}/>
-                    {isOwner && <Input  type="file" name='file' onChange={onMainPhotoSelected}/>}
-                    {editMode ? <ProfileDataForm profile={profile} setEditMode={setEditMode} /> : <ProfileData profile = {profile} isOwner={isOwner} goToEditMode={goToEditModeHandler}/>}
+                    <img alt='mainPhoto' src={profile.photos.large || userPhoto} className={s.mainPhoto}/>
+                    {isOwner && <Input type="file" name='file' onChange={onMainPhotoSelected}/>}
+                    {editMode ? <ProfileDataForm profile={profile} setEditMode={setEditMode}/> :
+                        <ProfileData profile={profile} isOwner={isOwner} goToEditMode={goToEditModeHandler}/>}
                     <ProfileStatus status={status} updateStatus={updateStatus}/>
-
                 </div>
-
             </div>
-
         </div>
     )
 })
 type ProfileDataType = {
     profile: ProfileType
     isOwner: boolean
-    goToEditMode: ()=>void
+    goToEditMode: () => void
 }
 const ProfileData = ({profile, isOwner, goToEditMode}: ProfileDataType) => {
     return <div>
@@ -62,26 +60,29 @@ const ProfileData = ({profile, isOwner, goToEditMode}: ProfileDataType) => {
         <div>
             <b>Looking for a job: </b>{profile.lookingForAJob ? 'yes' : 'no'}
         </div>
-            {profile.lookingForAJob &&
-                <div>
-                    <b>My profissional skills: </b> {profile.lookingForAJobDescription}
-                </div>}
+        {profile.lookingForAJob &&
+            <div>
+                <b>My profissional skills: </b> {profile.lookingForAJobDescription}
+            </div>}
         <div>
-            <b>Contacts: </b>{Object.keys(profile.contacts).map(key =>{
-                return <Contacts key ={key} contactTitle={key} contactValue={profile.contacts[key as keyof typeof profile.contacts]}/>
+            <b>Contacts: </b>{
+            Object
+                .keys(profile.contacts)
+                .map(key => {
+                    return <Contacts key={key}
+                                     contactTitle={key}
+                                     contactValue={profile.contacts[key as keyof typeof profile.contacts]}/>
         })}
         </div>
     </div>
 }
-
-
 
 type ContactsType = {
     contactTitle: string
     contactValue: string | null
 }
 
-const Contacts = ({contactTitle, contactValue}: ContactsType) =>{
+const Contacts = ({contactTitle, contactValue}: ContactsType) => {
     return <div className={s.contact}><b>{contactTitle}</b>: {contactValue}</div>
 }
 

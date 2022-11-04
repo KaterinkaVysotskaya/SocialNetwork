@@ -1,34 +1,38 @@
 import React from 'react'
 import s from './Users.module.css'
 import userPhoto from '../../assets/images/user.png'
-import {  UserType } from '../../redux/Users-reducer'
-import { NavLink } from 'react-router-dom'
+import {UserType} from '../../redux/Users-reducer'
+import {NavLink} from 'react-router-dom'
 import Button from "@mui/material/Button";
 
 type UserPropsType = {
     user: UserType
     follow: (userId: number) => void
     unfollow: (userId: number) => void
-    followingInProgress: any []
+    followingInProgress: number []
 }
 const User = React.memo(({user, followingInProgress, follow, unfollow}: UserPropsType) => {
     return (
-        <>
             <div>
-                <div >
+                <div>
                     <span>
                         <div>
                             <NavLink to={'/profile/' + user.id}>
-                                <img src={user.photos.small != null ? user.photos.small : userPhoto} className={s.userPhoto} />
+                                <img alt='userPhoto' src={user.photos.small != null ? user.photos.small : userPhoto}
+                                     className={s.userPhoto}/>
                             </NavLink>
                         </div>
                         <div>
                             {user.followed
                                 ? <Button disabled={followingInProgress.some(id => id === user.id)}
-                                          onClick={() => {unfollow(user.id) }}> Unfollow</Button>
+                                          onClick={() => {
+                                              unfollow(user.id)
+                                          }}> Unfollow</Button>
 
                                 : <Button disabled={followingInProgress.some(id => id === user.id)}
-                                          onClick={() => {follow(user.id)}}>Follow</Button>
+                                          onClick={() => {
+                                              follow(user.id)
+                                          }}>Follow</Button>
                             }
                         </div>
                     </span>
@@ -43,8 +47,6 @@ const User = React.memo(({user, followingInProgress, follow, unfollow}: UserProp
                     </span>
                 </div>
             </div>
-        </>
-
     )
 })
 

@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 
 const Header = React.memo((props: HeaderPropsType) => {
     return <header className={s.header}>
-    <img src='http://a.espncdn.com/combiner/i?img=%2Fi%2Fteamlogos%2Fncaa%2F500%2F41.png' />
+    <img alt='header' src='http://a.espncdn.com/combiner/i?img=%2Fi%2Fteamlogos%2Fncaa%2F500%2F41.png' />
   
     <div className={s.loginBlock}>
       { props.isAuth

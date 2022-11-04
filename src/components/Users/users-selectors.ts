@@ -1,6 +1,6 @@
 import {AppStateType} from "../../redux/redux-store";
 import {createSelector} from "reselect";
-import {UserType} from "../../redux/Users-reducer";
+
 
 const getIsAuthSelector = (state: AppStateType) => {
     return state.auth.isAuth

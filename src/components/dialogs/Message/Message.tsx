@@ -6,20 +6,12 @@ type messagePropsType = {
 }
 let sendMessage = React.createRef<HTMLTextAreaElement>()
 
-let addMessage = () => {
-    let text = sendMessage.current?.value
-    alert(text)
-}
-
 const Message = (props: messagePropsType) => {
     return (
-        <>
         <textarea ref={sendMessage}
                   className={s.message}>
                 {props.message}
-            </textarea>
-        {/*<button onClick={addMessage}>send</button>*/}
-        </>
+        </textarea>
     )
 
 

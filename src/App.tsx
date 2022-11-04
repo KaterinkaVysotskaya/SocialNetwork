@@ -1,13 +1,14 @@
 import React, {Suspense, lazy, useEffect} from "react";
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-import {BrowserRouter, HashRouter, Navigate, Route, Routes, useParams} from 'react-router-dom';
+import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
 import HeaderContainer from "./components/Header/HeaderContainer";
 import CustomizedSnackbars from "./outils/ErrorSnackBar";
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "./redux/redux-store";
 import {initializeAppTC} from "./redux/app-reducer";
 import {CircularProgress, LinearProgress} from "@mui/material";
+import {WithRouterWrap} from "./outils/withRouterWrap";
 
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
@@ -60,8 +61,5 @@ function App() {
 
 export default App;
 
-const WithRouterWrap = () => {
-    let {userId} = useParams();
-    return <ProfileContainer userId={userId}/>
-}
+
 

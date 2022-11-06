@@ -9,9 +9,9 @@ import {useAppSelector} from "./redux/redux-store";
 import {initializeAppTC} from "./redux/app-reducer";
 import {CircularProgress, LinearProgress} from "@mui/material";
 import {WithRouterWrap} from "./outils/withRouterWrap";
+import {UsersPage} from "./components/Users/UsersContainer";
 
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
-const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
 const Login = React.lazy(() => import('./components/login/Login'));
 const DialogsContainer = lazy(() => import("./components/dialogs/DialogsContainer"))
 
@@ -40,7 +40,7 @@ function App() {
                     <Suspense fallback={<div>Loading...</div>}>
                         <Routes>
                             <Route path='/' element={<ProfileContainer/>}/>
-                            <Route path='/users' element={<UsersContainer/>}/>
+                            <Route path='/users' element={<UsersPage/>}/>
                             <Route path='/dialogs' element={<DialogsContainer/>}/>
                             <Route path='/profile' element={<ProfileContainer/>}/>
                             <Route path="/profile/:userId" element={<WithRouterWrap/>}/>

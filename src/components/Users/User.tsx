@@ -13,8 +13,8 @@ type UserPropsType = {
 }
 const User = React.memo(({user, followingInProgress, follow, unfollow}: UserPropsType) => {
     return (
+        <div>
             <div>
-                <div>
                     <span>
                         <div>
                             <NavLink to={'/profile/' + user.id}>
@@ -36,17 +36,12 @@ const User = React.memo(({user, followingInProgress, follow, unfollow}: UserProp
                             }
                         </div>
                     </span>
-                    <span>
-                        <span><div>{user.name}</div>
-                            <div>{user.status}</div>
-                        </span>
-                        <span>
-                            <div>{'user.location.country'}</div>
-                            <div>{'user.location.city'}</div>
-                        </span>
+                <span>
+                    <div>{user.name}</div>
+                    <div>{user.status}</div>
                     </span>
-                </div>
             </div>
+        </div>
     )
 })
 

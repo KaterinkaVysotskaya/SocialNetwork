@@ -28,6 +28,7 @@ import Header from "./components/Header/Header";
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 const Login = React.lazy(() => import('./components/login/Login'));
 const DialogsContainer = lazy(() => import("./components/dialogs/DialogsContainer"))
+const ChatPage = lazy(() => import("./pages/Chat/ChatPage"))
 
 const { Content, Footer, Sider } = Layout;
 type MenuItem = Required<MenuProps>['items'][number];
@@ -83,7 +84,6 @@ const App: React.FC = () => {
             </Sider>
             <Layout className="site-layout">
                 <Header  />
-
                 <Content style={{ margin: '0 16px' }}>
                     <Breadcrumb style={{ margin: '16px 0' }}>
                         <Breadcrumb.Item>User</Breadcrumb.Item>
@@ -105,6 +105,7 @@ const App: React.FC = () => {
                                             <Route path='/profile' element={<ProfileContainer/>}/>
                                             <Route path="/profile/:userId" element={<WithRouterWrap/>}/>
                                             <Route path="/login" element={<Login/>}/>
+                                            <Route path="/chat" element={<ChatPage/>}/>
                                             <Route path='/404' element={<h1>404: PAGE NOT FOUND</h1>}/>
                                             <Route path="*" element={<Navigate to='/404'/>}/>
 

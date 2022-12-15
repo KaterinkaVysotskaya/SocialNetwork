@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './Header.module.css' ;
-import { NavLink } from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import {HeaderPropsType} from "./HeaderContainer";
 import Button from "@mui/material/Button";
 import {Avatar, Col, Layout, Row} from "antd";
@@ -12,25 +12,26 @@ import {logout} from "../../redux/auth-reducer";
 
 
 const Header = React.memo((props) => {
-   const isAuth = useAppSelector(state=>state.auth.isAuth)
-    const login = useAppSelector(state=>state.auth.login)
+    const isAuth = useAppSelector(state => state.auth.isAuth)
+    const login = useAppSelector(state => state.auth.login)
+    const userPhoto = useAppSelector(state => state.profilePage.profile?.photos.small)
     const dispatch = useDispatch()
-    const logoutCallback = ()=>{
-       dispatch(logout())
+    const logoutCallback = () => {
+        dispatch(logout())
     }
-    const { Header} = Layout;
-    return <Header >
+    const {Header} = Layout;
+    return <Header>
         <Row>
             <Col span={20}>
 
             </Col>
             <Col>
-
                 <div className={s.loginBlock}>
                     {isAuth
                         ? <div>
-                            <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
-                            {login}  -  <Button onClick={logoutCallback}>Log out</Button> </div>
+                            <Avatar src={userPhoto} style={{backgroundColor: userPhoto}} icon={<UserOutlined/>}/>
+                            <span style={{color: 'white', padding: '5px'}}>{login}</span>
+                            <Button onClick={logoutCallback}>Log out</Button></div>
                         : <NavLink to={'/login'}><Button>Login</Button></NavLink>}
 
                 </div>
@@ -38,7 +39,7 @@ const Header = React.memo((props) => {
         </Row>
 
 
-  </Header>
+    </Header>
 })
 
 export default Header;

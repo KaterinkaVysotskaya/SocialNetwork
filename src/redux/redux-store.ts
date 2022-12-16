@@ -6,13 +6,15 @@ import usersReducer from "./Users-reducer";
 import thunkMiddleware, {ThunkAction} from 'redux-thunk'
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {appReducer} from "./app-reducer";
+import chatReducer from "./chat-reducer";
 
 let rootReducer = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     usersPage: usersReducer,
     auth: authReducer,
-    app: appReducer
+    app: appReducer,
+    chat: chatReducer
 })
 
 export type AppStateType = ReturnType <typeof rootReducer>
